@@ -1,0 +1,44 @@
+﻿@model Login_Register.Model.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+
+<form action="/Registration/Login" method="post">
+    <div class="input-group mb-3">
+        <input type="email" class="form-control" placeholder="Email" name="Email">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+            </div>
+
+        </div>
+    </div>
+    <br />
+    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    <div class="input-group mb-3">
+        <input type="password" class="form-control" placeholder="Password" name="Password">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+            </div>
+        </div>
+    </div>
+    <br />
+    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    <div>
+
+        <button type="submit" class="btn btn-primary " value="create">Sign In</button>
+
+    </div>
+</form>
+<br />
+<p class="mb-0">
+   
+    @Html.ActionLink("Register a new membership", "Register")
+
+</p>
+
+<button class="btn btn-info" id="editBtn">Edit</button>

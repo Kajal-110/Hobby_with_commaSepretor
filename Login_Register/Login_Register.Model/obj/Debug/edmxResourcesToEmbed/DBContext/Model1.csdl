@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KajalPatel_01_07_2023Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__City__CountryId__29572725" FromRole="City" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="Self.FK__City__StateId__2A4B4B5E" FromRole="City" ToRole="State" />
+    <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__CityI__30F848ED" FromRole="City" ToRole="Registration" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK__City__CountryId__29572725" FromRole="Country" ToRole="City" />
+    <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__Count__2F10007B" FromRole="Country" ToRole="Registration" />
+    <NavigationProperty Name="States" Relationship="Self.FK__State__CountryId__267ABA7A" FromRole="Country" ToRole="State" />
+  </EntityType>
+  <EntityType Name="Registration">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Date_of_birth" Type="DateTime" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="Profile_photo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="Attachment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="Gender" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Hobbies" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Registrat__CityI__30F848ED" FromRole="Registration" ToRole="City" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__Registrat__Count__2F10007B" FromRole="Registration" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="Self.FK__Registrat__State__300424B4" FromRole="Registration" ToRole="State" />
+    <Property Name="IsIntrestedInDanching" Type="Boolean" />
+    <Property Name="IsIntrestedInReading" Type="Boolean" />
+    <Property Name="IsIntrestedInCooking" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK__City__StateId__2A4B4B5E" FromRole="State" ToRole="City" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__State__CountryId__267ABA7A" FromRole="State" ToRole="Country" />
+    <NavigationProperty Name="Registrations" Relationship="Self.FK__Registrat__State__300424B4" FromRole="State" ToRole="Registration" />
+  </EntityType>
+  <Association Name="FK__City__CountryId__29572725">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__City__StateId__2A4B4B5E">
+    <End Role="State" Type="Self.State" Multiplicity="0..1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__CityI__30F848ED">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Registration">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__Count__2F10007B">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="Registration">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__State__CountryId__267ABA7A">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__State__300424B4">
+    <End Role="State" Type="Self.State" Multiplicity="0..1" />
+    <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="Registration">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KajalPatel_01_07_2023Entities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Registrations" EntityType="Self.Registration" />
+    <EntitySet Name="States" EntityType="Self.State" />
+    <AssociationSet Name="FK__City__CountryId__29572725" Association="Self.FK__City__CountryId__29572725">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__City__StateId__2A4B4B5E" Association="Self.FK__City__StateId__2A4B4B5E">
+      <End Role="State" EntitySet="States" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__CityI__30F848ED" Association="Self.FK__Registrat__CityI__30F848ED">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Registration" EntitySet="Registrations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__Count__2F10007B" Association="Self.FK__Registrat__Count__2F10007B">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Registration" EntitySet="Registrations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__State__CountryId__267ABA7A" Association="Self.FK__State__CountryId__267ABA7A">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__State__300424B4" Association="Self.FK__Registrat__State__300424B4">
+      <End Role="State" EntitySet="States" />
+      <End Role="Registration" EntitySet="Registrations" />
+    </AssociationSet>
+    <EntitySet Name="Images" EntityType="KajalPatel_01_07_2023Model.Image" />
+    <EntitySet Name="Hobbies" EntityType="KajalPatel_01_07_2023Model.Hobby" />
+    <EntitySet Name="UserRecords" EntityType="KajalPatel_01_07_2023Model.UserRecord" />
+    <AssociationSet Name="FK__UserRecor__Hobbi__440B1D61" Association="KajalPatel_01_07_2023Model.FK__UserRecor__Hobbi__440B1D61">
+      <End Role="Hobby" EntitySet="Hobbies" />
+      <End Role="UserRecord" EntitySet="UserRecords" />
+    </AssociationSet>
+    <EntitySet Name="UserRecord12" EntityType="KajalPatel_01_07_2023Model.UserRecord12" />
+  </EntityContainer>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Hobby">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserRecords" Relationship="KajalPatel_01_07_2023Model.FK__UserRecor__Hobbi__440B1D61" FromRole="Hobby" ToRole="UserRecord" />
+  </EntityType>
+  <EntityType Name="UserRecord">
+    <Key>
+      <PropertyRef Name="RecordId" />
+    </Key>
+    <Property Name="RecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Hobbies" Type="Int32" />
+    <NavigationProperty Name="Hobby" Relationship="KajalPatel_01_07_2023Model.FK__UserRecor__Hobbi__440B1D61" FromRole="UserRecord" ToRole="Hobby" />
+  </EntityType>
+  <Association Name="FK__UserRecor__Hobbi__440B1D61">
+    <End Type="KajalPatel_01_07_2023Model.Hobby" Role="Hobby" Multiplicity="0..1" />
+    <End Type="KajalPatel_01_07_2023Model.UserRecord" Role="UserRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hobby">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRecord">
+        <PropertyRef Name="Hobbies" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserRecord12">
+    <Key>
+      <PropertyRef Name="RecordId" />
+    </Key>
+    <Property Name="RecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Hobbies" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>
